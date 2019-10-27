@@ -17,7 +17,27 @@ a:hover {
     color:white;
 }
 
-h3 search-hl, p search-hl {
+.search-hl {
     color: yellow;
-    font-weight: 600;
+}
+
+.full-viewport-height {
+    height: 100vh;
+}
+
+.three-quarters-viewport-height {
+    height: 75vh;
+}
+
+.parcent-35-vh {
+    height: 35vh;
+}
+
+i.fa-1point5x {
+    font-size: 1.5rem;
+}
+
+img.host {
+    width: 100px;
+    height: auto;
 }
