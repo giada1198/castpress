@@ -21,7 +21,7 @@
     <header>
         <div class="container">
             <div class="mt-4 float-right">
-                <a href="#"><i class="fa fa-sign-in fa-2x" aria-hidden="true"></i></a>
+                <a href="#" title="Login as Administrator"><i class="fa fa-sign-in fa-2x" aria-hidden="true"></i></a>
             </div>
         </div>
     </header>
@@ -43,16 +43,22 @@
                                 99% Invisible is about all the thought that goes into the things we don’t think about — the unnoticed architecture and design that shape our world. With over 250 million downloads.
                             </h5>
                             <div class="d-flex mt-4">
-                                <div class="mr-3"><a href="#"><i class="fa fa-podcast fa-3x" aria-hidden="true"></i></a></div>
-                                <div class="ml-3 mr-3"><a href="#"><i class="fa fa-spotify fa-3x" aria-hidden="true"></i></a></div>
-                                <div class="ml-3"><a href="#"><i class="fa fa-android fa-3x" aria-hidden="true"></i></a></div>
+                                <div class="mr-3">
+                                    <a href="#" title="Go to Podcast page on iTunes"><i class="fa fa-podcast fa-3x" aria-hidden="true"></i></a>
+                                </div>
+                                <div class="ml-3 mr-3">
+                                    <a href="#" title="Go to Podcast page on Spotify"><i class="fa fa-spotify fa-3x" aria-hidden="true"></i></a>
+                                </div>
+                                <div class="ml-3">
+                                    <a href="#" title="Go to Podcast page on Google Poscasts"><i class="fa fa-android fa-3x" aria-hidden="true"></i></a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="row mt-auto mb-4 ml-2 p-0 align-self-center">
-                    <a href="#"><i class="fa fa-chevron-circle-down fa-3x" aria-hidden="true"></i></a>
+                    <a href="#" title="Scroll down"><i class="fa fa-chevron-circle-down fa-3x" aria-hidden="true"></i></a>
                 </div>
             </div>
         </div>
@@ -81,12 +87,14 @@
         <div class="container mt-5 mb-5">
             <div class="row">
                 <div class="col-12 col-md-8 offset-md-2">
-                    <form>
+                    <form for="search">
                         <div class="p-1 bg-light rounded rounded-pill shadow-sm">
                             <div class="input-group">
-                                <input type="search" placeholder="Episodes, Contents, Published Dates, Tags" aria-describedby="button-addon1" class="form-control border-0 bg-light">
+                                <input type="search" placeholder="Episodes, Contents, Published Dates, Tags" aria-describedby="search-button" class="form-control border-0 bg-light">
                                 <div class="input-group-append">
-                                    <a class="btn btn-link text-primary" href="search-result.html" role="button"><i class="fa fa-search fa-1point5x"></i></a>
+                                    <a id="search-button" class="btn btn-link text-primary" href="search-result.html" role="button" title="Search the keywords you entered">
+                                        <i class="fa fa-search fa-1point5x"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -168,7 +176,7 @@
             <div class="d-flex flex-column parcent-35-vh">
                 <div class="row align-self-center">
                     <a class="pl-auto pr-auto" href="#">
-                        <a href="#"><i class="fa fa-chevron-circle-down fa-3x" aria-hidden="true"></i></a>
+                        <a href="#" title="Scroll down"><i class="fa fa-chevron-circle-down fa-3x" aria-hidden="true"></i></a>
                     </a>
                 </div>
             </div>
@@ -210,9 +218,15 @@
     <footer class="pt-4 pb-2 pt-md-5 pb-md-2">
         <div class="container">
             <div class="d-flex justify-content-center">
-                <div class="ml-3 mr-3"><a href="#"><i class="fa fa-podcast fa-3x" aria-hidden="true"></i></a></div>
-                <div class="ml-3 mr-3"><a href="#"><i class="fa fa-spotify fa-3x" aria-hidden="true"></i></a></div>
-                <div class="ml-3 mr-3"><a href="#"><i class="fa fa-android fa-3x" aria-hidden="true"></i></a></div>
+                <div class="mr-3">
+                    <a href="#" title="Go to Podcast page on iTunes"><i class="fa fa-podcast fa-3x" aria-hidden="true"></i></a>
+                </div>
+                <div class="ml-3 mr-3">
+                    <a href="#" title="Go to Podcast page on Spotify"><i class="fa fa-spotify fa-3x" aria-hidden="true"></i></a>
+                </div>
+                <div class="ml-3">
+                    <a href="#" title="Go to Podcast page on Google Poscasts"><i class="fa fa-android fa-3x" aria-hidden="true"></i></a>
+                </div>
             </div>
             <div class="mt-3 text-center">
                 <p>© 99% Invisible 2019</p>
