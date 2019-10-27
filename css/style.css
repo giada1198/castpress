@@ -1,0 +1,23 @@
+body {
+    font-family: 'Asap', sans-serif;
+    color:#ECD2C9;
+    background-color: #0F38B1;
+}
+
+.background-beige {
+    color: black;
+    background-color: #ECD2C9;
+}
+
+a {
+    color:#ECD2C9;
+}
+
+a:hover {
+    color:white;
+}
+
+h3 search-hl, p search-hl {
+    color: yellow;
+    font-weight: 600;
+}
