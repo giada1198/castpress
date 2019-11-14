@@ -1,0 +1,342 @@
+/* .container {
+    display: grid;
+} */
+
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    color:#F2F2F2;
+	background-color: #4F4F4F;
+}
+
+.container {
+	width: 100%;
+	padding-right: 30px;
+	padding-left: 30px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.header-container {
+	display: inline-flex;
+	position: fixed;
+	width: 100%;
+	top: 30px;
+	padding-right: 30px;
+	padding-left: 30px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.dot {
+	width: 36px;
+	height: 36px;
+	background-color: #C4C4C4;
+	border-radius: 50%;
+	display: inline-block;
+}
+
+.name {
+	display: inline-flex;
+	align-items: center;
+	width: auto;
+}
+
+.name h1 {
+	display: inline;
+	font-family: 'Noto Serif', serif;
+	font-weight: 400;
+	font-size: 28px;
+	margin: 0 0 0 10px;
+}
+
+.search-container-top {
+	display: none;
+}
+
+.content {
+	min-height: calc(100vh - 70px);
+	padding-top: 111px;
+	padding-bottom: 111px;
+}
+
+.content h2 {
+	font-family: 'Noto Serif', serif;
+	font-weight: 400;
+	font-size: 30px;
+	line-height: 140%;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+.content p {
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 140%;
+}
+
+.indicators {
+	margin-bottom: 30px;
+}
+
+.indicator {
+	cursor: pointer;
+	width: 36px;
+	height: 12px;
+	background-color: #C4C4C4;
+	border-radius: 6px;
+	display: inline-block;
+	margin-right: 10px;
+	opacity: 35%;
+}
+
+.active {
+	opacity: 100%;
+}
+
+.content .links {
+	margin-top: 30px;
+}
+
+.link {
+	cursor: pointer;
+	font-size: 12px;
+	color: #C4C4C4;
+	margin-right: 15px;
+}
+
+.deco-bar {
+	position: fixed;
+	background-color: #C4C4C4;
+	z-index: -1;
+	width: 10px;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}
+
+.episodes {
+	padding-bottom: 70px;
+}
+
+.episode {
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	width: 100%;
+	margin-bottom: 30px;
+}
+
+.episode-cover {
+	display: inline-block;
+	min-width: 75px;
+	min-height: 75px;
+	margin-right: 15px;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.episode-description h4 {
+	font-size: 12px;
+	font-weight: 400;
+	padding-bottom: 5px;
+}
+
+.episode-description h3 {
+	font-family: 'Noto Serif', serif;
+	font-size: 18px;
+	font-weight: 400;
+}
+
+.ep1 {
+	background-image: url(../img/ep1_cover.jpg);
+}
+
+.ep2 {
+	background-image: url(../img/ep2_cover.jpg);
+}
+
+.ep3 {
+	background-image: url(../img/ep3_cover.jpg);
+}
+
+.ep4 {
+	background-image: url(../img/ep4_cover.jpg);
+}
+
+.ep5 {
+	background-image: url(../img/ep5_cover.jpg);
+}
+
+.ep6 {
+	background-image: url(../img/ep6_cover.jpg);
+}
+
+
+
+
+
+
+
+
+.player {
+	position: fixed;
+	background-color: #333333;
+	height: 70px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.search-container-middle {
+	margin-top: 30px;
+	margin-bottom: 45px;
+}
+
+.search-container-middle input {
+	width: calc(100% - 24px);
+	padding: 9px 16px;
+	font-size: 16px;
+	border-radius: 36px;
+	border: none;
+	outline: none;
+}
+
+.search-icon-middle{
+	position: relative;
+	float: right;
+	top: -20px;
+	right: 8px;
+	color: #4F4F4F;
+	font-size: 24px;
+	transform: translateY(-50%);
+}
+
+@media (min-width: 576px) {
+	.container {
+		max-width: 540px;
+	}
+
+	.header-container {
+		max-width: 540px;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+}
+  
+@media (min-width: 768px) {
+	.container {
+		max-width: 720px;
+		grid-template-columns: repeat(12, 1fr);
+		grid-column-gap: 30px;
+		padding-right: 15px;
+		padding-left: 15px;
+	}
+
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(12, 1fr);
+		grid-column-gap: 30px;
+	}
+
+	.header-container {
+		justify-content: space-between;
+		max-width: 720px;
+		top: 30px;
+		left: 50%;
+		padding-right: 15px;
+		padding-left: 15px;
+		transform: translateX(-50%);
+		vertical-align: middle;
+	}
+
+	.deco-bar {
+		width: 50px;
+	}
+
+	.search-container-top {
+		display: inline-block;
+		width: auto;
+	}
+
+	.search-container-top input {
+		width: calc(360px - 32px);
+		padding: 11px 16px;
+		font-size: 14px;
+		border-radius: 36px;
+		border: none;
+		outline: none;
+	}
+
+	.search-icon-top{
+		position: fixed;
+		right: 30px;
+		top: 4px;
+		color: #4F4F4F;
+		font-size: 24px;
+	}
+
+	.search-container-middle {
+		display: none;
+	}
+
+	.content {
+		grid-column: 1 / 10;
+		min-height: calc(100vh - 100px);
+		padding-top: 221px;
+		padding-bottom: 221px;
+	}
+
+	.content h2 {
+		margin-top: 75px;
+	}
+	
+	.content .links {
+		margin-top: 25px;
+	}
+
+	.episodes {
+		padding-bottom: 100px;
+	}
+
+	.episode {
+		margin-bottom: 40px;
+	}
+
+	.episode-cover {
+		min-width: 120px;
+		min-height: 120px;
+		margin-right: 20px;
+	}
+
+	.episode-description h4 {
+		font-size: 16px;
+		padding-bottom: 10px;
+	}
+	
+	.episode-description h3 {
+		font-size: 24px;
+	}
+
+	.player {
+		height: 100px;
+	}
+
+}
+  
+@media (min-width: 992px) {
+	.container, .header-container {
+		max-width: 960px;
+	}
+}
+  
+@media (min-width: 1200px) {
+	.container, .header-container {
+		max-width: 1140px;
+	}
+}
