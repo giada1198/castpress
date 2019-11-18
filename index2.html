@@ -25,7 +25,10 @@
         <div class="header-container">
             <div class="name">
                 <span class="dot"></span>
-                <h1>99% Invisible</h1>
+                <div class="texts">
+                    <h1>99% Invisible</h1>
+                    <a href="#">Admin Login</a>
+                </div>
             </div>
             <form class="search-container-top">
                 <input type="text" id="search-bar" placeholder="Episodes, Contents, Published Dates">
@@ -38,20 +41,10 @@
         <div class="container grid">
             <div class="content">
                 <div class="indicators">
-                    <span class="indicator active"></span>
-                    <span class="indicator"></span>
+                    <span id="to-overview" class="indicator active"></span>
+                    <span id="to-hosts" class="indicator"></span>
                 </div>
-                <h2>
-                    Ever wonder how inflatable men came to be regular fixtures at used car lots? Curious about the origin of the fortune cookie?
-                </h2>
-                <p>
-                    99% Invisible is about all the thought that goes into the things we don’t think about — the unnoticed architecture and design that shape our world. With over 250 million downloads.
-                </p>
-                <div class="links">
-                    <a class="link" href="https://podcasts.apple.com/us/podcast/99-invisible/id394775318" aria-label="Go to Podcast page on Apple Podcasts" title="Apple Podcasts"><i class="fa fa-podcast fa-3x" aria-hidden="true"></i></a>
-                    <a class="link" href="https://open.spotify.com/show/2VRS1IJCTn2Nlkg33ZVfkM" aria-label="Go to Podcast page on Spotify" title="Spotify"><i class="fa fa-spotify fa-3x" aria-hidden="true"></i></a>
-                    <a class="link" href="https://play.google.com/store/apps/details?id=com.google.android.apps.podcasts&hl=en_US" aria-label="Go to Podcast page on Google Poscasts" title="Google Poscasts"><i class="fa fa-android fa-3x" aria-hidden="true"></i></a>
-                </div>
+                <div class="overview-editable"></div>
             </div>
         </div>
 
@@ -63,50 +56,7 @@
         </div>
 
         <div class="container">
-            <div class="episodes">
-                <div class="episode">
-                    <div class="episode-cover ep6"></div>
-                    <div class="episode-description">
-                        <h4>Episode 6</h4>
-                        <h3>Great Bitter Lake Association</h3>
-                    </div>
-                </div>
-                <div class="episode">
-                    <div class="episode-cover ep5"></div>
-                    <div class="episode-description">
-                        <h4>Episode 5</h4>
-                        <h3>Audio Guide to the Imperfections of a Perfect Masterpiece</h3>
-                    </div>
-                </div>
-                <div class="episode">
-                    <div class="episode-cover ep4"></div>
-                    <div class="episode-description">
-                        <h4>Episode 4</h4>
-                        <h3>Unsure Footing</h3>
-                    </div>
-                </div>
-                <div class="episode">
-                    <div class="episode-cover ep3"></div>
-                    <div class="episode-description">
-                        <h4>Episode 3</h4>
-                        <h3>The Kirkbride Plan</h3>
-                    </div>
-                </div>
-                <div class="episode">
-                    <div class="episode-cover ep2"></div>
-                    <div class="episode-description">
-                        <h4>Episode 2</h4>
-                        <h3>The Help-Yourself City</h3>
-                    </div>
-                </div>
-                <div class="episode">
-                    <div class="episode-cover ep1"></div>
-                    <div class="episode-description">
-                        <h4>Episode 1</h4>
-                        <h3>Dead Cars</h3>
-                    </div>
-                </div>
-            </div>
+            <div class="episodes"></div>
         </div>
     </main>
 
@@ -140,5 +90,7 @@
             </div>
         </div>
     </footer>
+    <!-- Load JavaScript libraries here -->
+    <script src="js/index.js"></script>
 </body>
 </html>

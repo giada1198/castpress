@@ -1,8 +1,3 @@
-/* .container {
-    display: grid;
-} */
-
-
 * {
 	margin: 0;
 	padding: 0;
@@ -55,6 +50,10 @@ body {
 	margin: 0 0 0 10px;
 }
 
+.name a {
+	display: none;
+}
+
 .search-container-top {
 	display: none;
 }
@@ -64,26 +63,28 @@ body {
 	padding-top: 111px;
 	padding-bottom: 111px;
 	max-height: 100vh;
-	/* border: solid 2px blue; */
 }
 
-.content h2 {
+.overview-editable {
+	margin-top: 30px;
+}
+
+.overview-editable h2 {
 	font-family: 'Noto Serif', serif;
 	font-weight: 400;
 	font-size: 24px;
 	line-height: 140%;
-	margin-top: 30px;
 	margin-bottom: 30px;
 }
 
-.content p {
+.overview-editable p {
 	font-weight: 400;
 	font-size: 16px;
 	line-height: 140%;
 }
 
 .indicators {
-	margin-bottom: 30px;
+	/* margin-bottom: 30px; */
 }
 
 .indicator {
@@ -101,13 +102,13 @@ body {
 	opacity: 100%;
 }
 
-.content .links {
+.links {
 	margin-top: 30px;
 }
 
 .link {
 	cursor: pointer;
-	font-size: 12px;
+	font-size: 30px;
 	color: #C4C4C4;
 	margin-right: 15px;
 }
@@ -275,6 +276,21 @@ body {
 	transform: translateY(-50%);
 }
 
+.edit-buttons {
+	position: absolute;
+	width: 24px;
+	transform: translate(-54px, 10px);
+}
+
+.edit-buttons button {
+    background-color: Transparent;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+	outline: none;
+	margin-bottom: 10px;
+}
+
 @media (min-width: 576px) {
 	.container {
 		max-width: 540px;
@@ -311,6 +327,15 @@ body {
 		padding-left: 15px;
 		transform: translateX(-50%);
 		vertical-align: middle;
+	}
+
+	.name a {
+		display: inline;
+		font-size: 14px;
+		margin-left: 25px;
+		color: #F2F2F2;
+		text-decoration: none;
+		opacity: 0.5;
 	}
 
 	.deco-bar {
@@ -351,16 +376,19 @@ body {
 		padding-bottom: 196px;
 	}
 
-	.content h2 {
-		font-size: 26px;
+	.overview-editable {
 		margin-top: 75px;
 	}
 
-	.content p {
+	.overview-editable h2 {
+		font-size: 26px;
+	}
+
+	.overview-editable p {
 		font-size: 16px;
 	}
 	
-	.content .links {
+	.links {
 		margin-top: 25px;
 	}
 
