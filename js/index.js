@@ -5,8 +5,49 @@ let isAdminLogin = false;
 let indicatorState = 'overview';
 let database;
 
+function renderHeader(data) {
+    let header = document.querySelector('.header-texts');
+    header.innerHTML = '';
+    let title = document.createElement('h1');
+    title.textContent = data.name;
+    let loginButton = document.createElement('button');
+    loginButton.classList.add('login');
+    if(isAdminLogin === true) {
+        loginButton.textContent = 'Sign out';
+    } else {
+        loginButton.textContent = 'Admin Login';
+    }
+    loginButton.addEventListener('click', () => {
+        isAdminLogin = !isAdminLogin;
+        renderHeader(data);
+        renderContent(data);
+        renderEpisodes(data);
+    });
+    header.appendChild(title);
+    header.appendChild(loginButton);
+}
+
+function renderContent(data) {
+    if(indicatorState === 'overview') {
+        document.querySelector('.overview-editable').innerHTML = '';
+        renderOverview(data);
+    } else if(indicatorState === 'hosts') {
+        document.querySelector('.overview-editable').innerHTML = '';
+        renderHosts(data);
+    }
+}
+
 function renderOverview(data) {
     let overview = document.querySelector('.overview-editable');
+    if(isAdminLogin == true) {
+        let buttons = document.createElement('div');
+        buttons.classList.add('edit-buttons');
+        let editButton = document.createElement('button');
+        // buttons.classList.add('edit-buttons')
+        editButton.innerHTML = '<img src="img/icons/edit-text.svg" alt="Flowers in Chania"/>';
+        buttons.appendChild(editButton);
+        overview.appendChild(buttons);
+    }
     let pd = document.createElement('h2');
     pd.textContent = data.overview['primary-description'];
     overview.appendChild(pd);
@@ -50,17 +91,56 @@ function renderOverview(data) {
 }
 
 function renderHosts(data) {
+    let overview = document.querySelector('.overview-editable');
+    data.hosts.forEach((host) => {
+        let h = document.createElement('div');
+        h.classList.add('host');
+        if(isAdminLogin == true) {
+            let buttons = document.createElement('div');
+            buttons.classList.add('edit-buttons');
+            let editButton = document.createElement('button');
+            // buttons.classList.add('edit-buttons')
+            editButton.innerHTML = '<img src="img/icons/edit-text.svg" alt="Flowers in Chania"/>';
+            buttons.appendChild(editButton);
+            h.appendChild(buttons);
+        }
 
+        let photo = document.createElement('div');
+        photo.classList.add('photo');
+        photo.setAttribute('style', 'background-image: url(' + host.photo + ');');
+        h.appendChild(photo);
+
+        let intro = document.createElement('div');
+        h.classList.add('introduction');
+        let name = document.createElement('h3');
+        name.innerText = host.name;
+        intro.appendChild(name);
+        let description = document.createElement('p');
+        description.innerText = host.description;
+        intro.appendChild(description);
+        h.appendChild(intro);
+
+        overview.appendChild(h);
+    });
 }
 
 function renderEpisodes(data) {
     let episodesList = document.querySelector('.episodes');
+    episodesList.innerHTML = '';
     let episodes = data.episodes;
     episodes.sort((episode1, episode2) => episode2.episode - episode1.episode);
     episodes.forEach((episode) => {
-        console.log(episode);
         let ep = document.createElement('div');
         ep.classList.add('episode');
+        if(isAdminLogin == true) {
+            let buttons = document.createElement('div');
+            buttons.classList.add('edit-buttons');
+            let editButton = document.createElement('button');
+            // buttons.classList.add('edit-buttons')
+            editButton.innerHTML = '<img src="img/icons/edit-text.svg" alt="Flowers in Chania"/>';
+            buttons.appendChild(editButton);
+            ep.appendChild(buttons);
+        }
         let cover = document.createElement('div');
         cover.setAttribute('style', 'background-image: url(' + episode['cover-photo'] + ');');
         cover.classList.add('episode-cover');
@@ -80,21 +160,20 @@ function renderEpisodes(data) {
 
 function fetchDatabase(url) {
 	let promise = fetch(url)
-		.then(function(response) {
+		.then((response) => {
 			return response.json();
 		})
-		.then(function(data) {
+		.then((data) => {
             database = JSON.parse(JSON.stringify(data));
             renderOverview(database);
             renderEpisodes(database);
+            renderHeader(database)
 		})
-		.catch(function(err) {
-			// renderError(err);
+		.catch((err) => {
+			console.log(err);
         })
     return promise;
 }
-
-fetchDatabase(databaseURL);
 
 let overviewIndicator = document.querySelector('#to-overview');
 overviewIndicator.addEventListener('click', () => {
@@ -102,11 +181,9 @@ overviewIndicator.addEventListener('click', () => {
         indicatorState = 'overview';
         hostsIndicator.classList.remove('active');
         overviewIndicator.classList.add('active');
-        document.querySelector('.overview-editable').innerHTML = '';
-        renderOverview(database);
+        renderContent(database);
     }
 });
-
 
 let hostsIndicator = document.querySelector('#to-hosts');
 hostsIndicator.addEventListener('click', () => {
@@ -114,8 +191,8 @@ hostsIndicator.addEventListener('click', () => {
         indicatorState = 'hosts';
         overviewIndicator.classList.remove('active');
         hostsIndicator.classList.add('active');
-        document.querySelector('.overview-editable').innerHTML = '';
-        renderHosts(database);
+        renderContent(database);
     }
 });
 
+fetchDatabase(databaseURL);
