@@ -9,14 +9,10 @@
     <title>99% Invisible</title>
     <!-- normalize.css for cross-browser stuff -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
-    <!-- Font Awesome 4.7.0 -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,700|Open+Sans:400,700&amp;display=swap" rel="stylesheet">
-    <!-- Style Sheet -->
-    <link rel="stylesheet" href="css/style.css">
-    <!-- Favicon -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -35,6 +31,8 @@
     </header>
 
     <main>
+        <div id="forModal"></div>
+
         <div class="container grid">
             <div class="content">
                 <div class="indicators">
@@ -60,23 +58,14 @@
     <footer>
         <div class="player">
             <div class="container grid">
-                <div class="now-playing-info-desktop">
-                    <div class="now-playing-episode-cover"></div>
-                    <div>
-                        <div class="ep">Episode 2</div>
-                        <div class="title">The Help-Yourself City</div>
-                    </div>
-                </div>
+                <div class="now-playing-info-desktop"></div>
                 <div class="player-interface">
                     <a href="#" class="step-backward-button"><i class="fa fa-step-backward"></i></a>
-                    <a href="#" class="play-button"><i class="fa fa-play"></i></a>
+                    <a class="play-button"><i class="fa fa-play"></i></a>
                     <a href="#" class="forward-button"><i class="fa fa-forward"></i></a>
                     <a href="#" class="step-forward-button"><i class="fa fa-step-forward"></i></a>
                     <div class="now-playing">
-                        <div class="now-playing-info-mobile">
-                            <div class="ep">Episode 2</div>
-                            <div class="title">The Help-Yourself City</div>
-                        </div>
+                        <div class="now-playing-info-mobile"></div>
                         <div class="progress-bar">
                             <div class="current-time">0:00</div>
                             <div class="bar"></div>

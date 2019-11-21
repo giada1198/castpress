@@ -2,7 +2,9 @@
 
 const databaseURL = 'js/database.json';
 let isAdminLogin = false;
+let isEditingOverview = false;
 let indicatorState = 'overview';
+let nowPlayingEpisode = 0;
 let database;
 
 function renderHeader(data) {
@@ -13,9 +15,9 @@ function renderHeader(data) {
     let loginButton = document.createElement('button');
     loginButton.classList.add('login');
     if(isAdminLogin === true) {
-        loginButton.textContent = 'Sign out';
+        loginButton.textContent = 'Sign Out';
     } else {
-        loginButton.textContent = 'Admin Login';
+        loginButton.textContent = 'Login';
     }
     loginButton.addEventListener('click', () => {
         isAdminLogin = !isAdminLogin;
@@ -28,6 +30,7 @@ function renderHeader(data) {
 }
 
 function renderContent(data) {
+    renderModal(data)
     if(indicatorState === 'overview') {
         document.querySelector('.overview-editable').innerHTML = '';
         renderOverview(data);
@@ -44,7 +47,11 @@ function renderOverview(data) {
         buttons.classList.add('edit-buttons');
         let editButton = document.createElement('button');
         // buttons.classList.add('edit-buttons')
-        editButton.innerHTML = '<img src="img/icons/edit-text.svg" alt="Flowers in Chania"/>';
+        editButton.innerHTML = '<img src="img/icons/edit-text.svg" alt="edit the overview section"/>';
+        editButton.addEventListener('click', () => {
+            isEditingOverview = !isEditingOverview;
+            renderContent(data);
+        });
         buttons.appendChild(editButton);
         overview.appendChild(buttons);
     }
@@ -56,7 +63,6 @@ function renderOverview(data) {
     overview.appendChild(sd);
     let links = document.createElement('div');
     links.classList.add('links');
-
     // Apple Podcasts Icon
     let ap = document.createElement('a');
     ap.classList.add('link');
@@ -66,7 +72,6 @@ function renderOverview(data) {
     ap.appendChild(links);
     ap.innerHTML = '<i class="fa fa-podcast" aria-hidden="true"></i>';
     links.appendChild(ap);
-
     // Spotify Icon
     let sf = document.createElement('a');
     sf.classList.add('link');
@@ -76,7 +81,6 @@ function renderOverview(data) {
     sf.appendChild(links);
     sf.innerHTML = '<i class="fa fa-spotify" aria-hidden="true"></i>';
     links.appendChild(sf);
-
     // Google Podcasts Icon
     let gp = document.createElement('a');
     gp.classList.add('link');
@@ -92,16 +96,24 @@ function renderOverview(data) {
 
 function renderHosts(data) {
     let overview = document.querySelector('.overview-editable');
+    let hostOrder = 0;
     data.hosts.forEach((host) => {
+        hostOrder += 1;
         let h = document.createElement('div');
         h.classList.add('host');
         if(isAdminLogin == true) {
             let buttons = document.createElement('div');
             buttons.classList.add('edit-buttons');
+            // Edit Host Button
             let editButton = document.createElement('button');
-            // buttons.classList.add('edit-buttons')
-            editButton.innerHTML = '<img src="img/icons/edit-text.svg" alt="Flowers in Chania"/>';
+            editButton.innerHTML = '<img src="img/icons/edit-text.svg" alt="edit profile of the host"/>';
             buttons.appendChild(editButton);
+            // Add Host Button
+            if(hostOrder === data.hosts.length) {
+                let addButton = document.createElement('button');
+                addButton.innerHTML = '<img src="img/icons/edit-add.svg" alt="add a new host profile"/>';
+                buttons.appendChild(addButton);
+            };
             h.appendChild(buttons);
         }
 
@@ -124,23 +136,127 @@ function renderHosts(data) {
     });
 }
 
+function renderModal(data) {
+    let forModal = document.querySelector('#forModal');
+    forModal.innerHTML = ''
+    if(isEditingOverview) {
+        let modal = document.createElement('div');
+        modal.classList.add('modal');
+        // modal.addEventListener('click', (event) => {
+        //     if(event.target == modal) {
+        //         isEditingOverview = false;
+        //         renderContent(data);
+        //     };
+        // });
+        let modalWindow = document.createElement('div');
+        modalWindow.classList.add('modal-window');
+
+        // Modal Top Bar
+        let topBar = document.createElement('div');
+        topBar.classList.add('modal-top-bar');
+        let closeButton = document.createElement('button');
+        closeButton.classList.add('close-button');
+        closeButton.innerHTML = '<i class="fa fa-times" aria-hidden="true"></i>';
+        closeButton.addEventListener('click', () => {
+            isEditingOverview = false;
+            renderContent(data);
+        });
+        let saveButton = document.createElement('button');
+        saveButton.classList.add('save-button');
+        saveButton.innerText = 'Save';
+        saveButton.addEventListener('click', () => {
+            data.overview['primary-description'] = d1input.value;
+            data.overview['secondary-description'] = d2input.value;
+            data.links['apple-podcasts'] = d3input.value;
+            data.links['spotify'] = d4input.value;
+            data.links['google-podcasts'] = d5input.value;
+            isEditingOverview = false;
+            renderContent(data);
+        });
+        topBar.appendChild(closeButton);
+        topBar.appendChild(saveButton);
+
+        // Modal Content
+        let content = document.createElement('div');
+        content.classList.add('modal-content');
+
+        // Primary Description (d1)
+        let d1 = document.createElement('div');
+        d1.innerHTML = '<label for="primary description">Primary Description</label>';
+        let d1input = document.createElement('textarea');
+        d1input.id = 'primary description';
+        d1input.rows = 3;
+        d1input.name = 'primary_description';
+        d1input.value = data.overview['primary-description']
+        d1.appendChild(d1input);
+        content.appendChild(d1);
+
+        // Secondary Description (d2)
+        let d2 = document.createElement('div');
+        d2.innerHTML = '<label for="secondary description">Secondary Description</label>';
+        let d2input = document.createElement('textarea');
+        d2input.id = 'secondary description';
+        d2input.rows = 3;
+        d2input.name = 'secondary_description';
+        d2input.value = data.overview['secondary-description']
+        d2.appendChild(d2input);
+        content.appendChild(d2);
+
+        // Apple Podcasts Link (d3)
+        let d3 = document.createElement('div');
+        d3.innerHTML = '<label for="apple podcasts">Apple Podcasts</label>';
+        let d3input = document.createElement('input');
+        d3input.id = 'apple podcasts';
+        d3input.type = 'url';
+        d3input.name = 'apple_podcasts_link';
+        d3input.value = data.links['apple-podcasts']
+        d3.appendChild(d3input);
+        content.appendChild(d3);
+
+        // Spotify Link (d4)
+        let d4 = document.createElement('div');
+        d4.innerHTML = '<label for="spotify">Spotify</label>';
+        let d4input = document.createElement('input');
+        d4input.id = 'spotify';
+        d4input.type = 'url';
+        d4input.name = 'spotify_link';
+        d4input.value = data.links['spotify']
+        d4.appendChild(d4input);
+        content.appendChild(d4);
+
+        // Google Podcasts Link (d5)
+        let d5 = document.createElement('div');
+        d5.innerHTML = '<label for="google podcasts">Google Podcasts</label>';
+        let d5input = document.createElement('input');
+        d5input.id = 'google podcasts';
+        d5input.type = 'url';
+        d5input.name = 'google_podcasts_link';
+        d5input.value = data.links['google-podcasts']
+        d5.appendChild(d5input);
+        content.appendChild(d5);
+
+        modalWindow.appendChild(topBar);
+        modalWindow.appendChild(content);
+        modal.appendChild(modalWindow);
+        forModal.appendChild(modal);
+    };
+}
+
 function renderEpisodes(data) {
     let episodesList = document.querySelector('.episodes');
     episodesList.innerHTML = '';
-    let episodes = data.episodes;
-    episodes.sort((episode1, episode2) => episode2.episode - episode1.episode);
-    episodes.forEach((episode) => {
+    data.episodes.forEach((episode) => {
         let ep = document.createElement('div');
         ep.classList.add('episode');
-        if(isAdminLogin == true) {
-            let buttons = document.createElement('div');
-            buttons.classList.add('edit-buttons');
-            let editButton = document.createElement('button');
-            // buttons.classList.add('edit-buttons')
-            editButton.innerHTML = '<img src="img/icons/edit-text.svg" alt="Flowers in Chania"/>';
-            buttons.appendChild(editButton);
-            ep.appendChild(buttons);
-        }
+        // if(isAdminLogin == true) {
+        //     let buttons = document.createElement('div');
+        //     buttons.classList.add('edit-buttons');
+        //     let editButton = document.createElement('button');
+        //     // buttons.classList.add('edit-buttons')
+        //     editButton.innerHTML = '<img src="img/icons/edit-text.svg" alt="edit this podcast episode"/>';
+        //     buttons.appendChild(editButton);
+        //     ep.appendChild(buttons);
+        // }
         let cover = document.createElement('div');
         cover.setAttribute('style', 'background-image: url(' + episode['cover-photo'] + ');');
         cover.classList.add('episode-cover');
@@ -158,6 +274,46 @@ function renderEpisodes(data) {
     });
 }
 
+function renderNowPlaying(data) {
+    renderNowPlayingDesktop(data);
+    renderNowPlayingMobile(data);
+}
+
+function renderNowPlayingDesktop(data) {
+    let nowPlayingDesktop = document.querySelector('.now-playing-info-desktop');
+    nowPlayingDesktop.innerHTML = '';
+    let cover = document.createElement('div');
+    cover.classList.add('now-playing-episode-cover');
+    let style = 'background-image: url(' + data.episodes[nowPlayingEpisode]['cover-photo'] + ');';
+    cover.setAttribute('style', style);
+    
+    let d = document.createElement('div');
+    let ep = document.createElement('div');
+    ep.classList.add('ep');
+    ep.textContent = 'Episode ' + data.episodes[nowPlayingEpisode]['episode'];
+    let title = document.createElement('div');
+    title.classList.add('title');
+    title.textContent = data.episodes[nowPlayingEpisode]['title'];
+    d.appendChild(ep);
+    d.appendChild(title);
+
+    nowPlayingDesktop.appendChild(cover);
+    nowPlayingDesktop.appendChild(d);
+}
+
+function renderNowPlayingMobile(data) {
+    let nowPlayingMobile = document.querySelector('.now-playing-info-mobile');
+    nowPlayingMobile.innerHTML = '';
+    let ep = document.createElement('div');
+    ep.classList.add('ep');
+    ep.textContent = 'Episode ' + data.episodes[nowPlayingEpisode]['episode'];
+    let title = document.createElement('div');
+    title.classList.add('title');
+    title.textContent = data.episodes[nowPlayingEpisode]['title'];
+    nowPlayingMobile.appendChild(ep);
+    nowPlayingMobile.appendChild(title);
+}
+
 function fetchDatabase(url) {
 	let promise = fetch(url)
 		.then((response) => {
@@ -165,9 +321,12 @@ function fetchDatabase(url) {
 		})
 		.then((data) => {
             database = JSON.parse(JSON.stringify(data));
-            renderOverview(database);
+            // sort episodes from latest to oldest
+            database.episodes.sort((episode1, episode2) => episode2.episode - episode1.episode);
+            renderHeader(database);
+            renderContent(database);
             renderEpisodes(database);
-            renderHeader(database)
+            renderNowPlaying(database);
 		})
 		.catch((err) => {
 			console.log(err);
@@ -193,6 +352,18 @@ hostsIndicator.addEventListener('click', () => {
         hostsIndicator.classList.add('active');
         renderContent(database);
     }
+});
+
+let backwardButton = document.querySelector('.step-backward-button');
+backwardButton.addEventListener('click', () => {
+    nowPlayingEpisode = (nowPlayingEpisode + 1) % database.episodes.length;
+    renderNowPlaying(database);
+});
+
+let forwardButton = document.querySelector('.step-forward-button');
+forwardButton.addEventListener('click', () => {
+    nowPlayingEpisode = (nowPlayingEpisode - 1 + database.episodes.length) % database.episodes.length;
+    renderNowPlaying(database);
 });
 
 fetchDatabase(databaseURL);
