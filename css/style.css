@@ -21,11 +21,11 @@ body {
 	display: inline-flex;
 	position: fixed;
 	width: 100%;
-	top: 30px;
-	padding-right: 30px;
-	padding-left: 30px;
+	top: 0;
+	padding: 30px;
 	margin-right: auto;
 	margin-left: auto;
+	background-image: linear-gradient(to bottom, rgba(79,79,79,1) 50%, rgba(79,79,79,0) 100%);
 }
 
 .dot {
@@ -59,8 +59,7 @@ body {
 	outline: none;
 	font-size: 14px;
 	margin-left: 15px;
-	color: #F2F2F2;
-	opacity: 0.5;
+	color: #BDBDBD;
 }
 
 .search-container-top {
@@ -71,7 +70,7 @@ body {
 	min-height: calc(100vh - 70px);
 	padding-top: 111px;
 	padding-bottom: 111px;
-	max-height: 100vh;
+	/* max-height: 100vh; */
 }
 
 .indicator {
@@ -121,7 +120,7 @@ body {
 .deco-bar {
 	position: fixed;
 	background-color: #C4C4C4;
-	z-index: -1;
+	z-index: 2;
 	width: 10px;
 	right: 0;
 	top: 0;
@@ -180,13 +179,13 @@ body {
 	background-repeat: no-repeat;
 }
 
-.episode-description h4 {
+.episode-description h3 {
 	font-size: 10px;
 	font-weight: 400;
 	padding-bottom: 5px;
 }
 
-.episode-description h3 {
+.episode-description h4 {
 	font-family: 'Noto Serif', serif;
 	font-size: 16px;
 	font-weight: 400;
@@ -216,6 +215,11 @@ body {
 	color: #C4C4C4;
 	font-size: 30px;
 	margin-right: 15px;
+	opacity: 25%;
+}
+
+.forward-button {
+	opacity: 25%;
 }
 
 .step-backward-button, .forward-button, .step-forward-button {
@@ -301,6 +305,10 @@ body {
     overflow: hidden;
 	outline: none;
 	margin-right: 8px;
+}
+
+.edit-buttons .inactive {
+	opacity: 25%;
 }
 
 .modal {
@@ -393,6 +401,15 @@ body {
 	border-radius: 6px;
 }
 
+.fa-spinner {
+	margin-top: 30px;
+	font-size: 30px;
+}
+
+.spinner-inactive {
+	display: none;
+}
+
 @media (min-width: 576px) {
 	.container {
 		max-width: 540px;
@@ -423,7 +440,6 @@ body {
 	.header-container {
 		justify-content: space-between;
 		max-width: 720px;
-		top: 30px;
 		left: 50%;
 		padding-right: 15px;
 		padding-left: 15px;
@@ -457,7 +473,7 @@ body {
 	.search-icon-top{
 		position: fixed;
 		right: 30px;
-		top: 4px;
+		top: 34px;
 		color: #4F4F4F;
 		font-size: 24px;
 	}
@@ -521,12 +537,12 @@ body {
 		margin-right: 20px;
 	}
 
-	.episode-description h4 {
+	.episode-description h3 {
 		font-size: 16px;
 		padding-bottom: 10px;
 	}
 	
-	.episode-description h3 {
+	.episode-description h4 {
 		font-size: 24px;
 		
 	}

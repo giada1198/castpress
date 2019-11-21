@@ -13,18 +13,20 @@
     <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,700|Open+Sans:400,700&amp;display=swap"
         rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="img/icons/favicon.ico">
     <link rel="stylesheet" href="css/style.css">
+    <!-- load Polyfill to support IE and Safari 10 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
 </head>
 
 <body>
     <header>
         <span class="deco-bar"></span>
         <div class="header-container">
-            <div class="name">
+            <section class="name">
                 <span class="dot"></span>
                 <div class="header-texts"></div>
-            </div>
+            </section>
             <form class="search-container-top">
                 <input type="text" id="search-bar-desktop" placeholder="Episodes, Contents, Published Dates">
                 <a href="#"><i class="search-icon-top fa fa-search fa-1point5x" aria-hidden="true"></i></a>
@@ -34,13 +36,14 @@
     <main>
         <div id="forModal"></div>
         <div class="container grid">
-            <div class="content">
+            <section class="content">
                 <div class="indicators">
                     <span id="to-overview" class="indicator active"></span>
                     <span id="to-hosts" class="indicator"></span>
                 </div>
+                <i class="spinner-inactive fa fa-spinner fa-spin" aria-hidden="true"></i>
                 <div class="overview-editable"></div>
-            </div>
+            </section>
         </div>
         <div class="container search-container-middle">
             <form>
@@ -49,11 +52,11 @@
             </form>
         </div>
         <div class="container">
-            <div class="episodes"></div>
+            <section class="episodes"></section>
         </div>
     </main>
     <footer>
-        <div class="player">
+        <section class="player">
             <div class="container grid">
                 <div class="now-playing-info-desktop"></div>
                 <div class="player-interface">
@@ -71,9 +74,8 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     </footer>
-    <!-- Load JavaScript libraries here -->
     <script src="js/index.js"></script>
 </body>
 

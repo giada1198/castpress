@@ -1,6 +1,6 @@
 'use strict';
 
-const databaseURL = 'js/database.json';
+const DATABASEURL = 'js/database.json';
 let isAdminLogin = false;
 let isEditingOverview = false;
 let indicatorState = 'overview';
@@ -12,6 +12,8 @@ function renderHeader(data) {
     header.innerHTML = '';
     let title = document.createElement('h1');
     title.textContent = data.name;
+
+    // login button
     let loginButton = document.createElement('button');
     loginButton.classList.add('login');
     if(isAdminLogin === true) {
@@ -63,30 +65,36 @@ function renderOverview(data) {
     overview.appendChild(sd);
     let links = document.createElement('div');
     links.classList.add('links');
-    // Apple Podcasts Icon
+    
+    // Apple Podcasts icon
     let ap = document.createElement('a');
     ap.classList.add('link');
     ap.title = 'Apple Podcasts';
-    ap.setAttribute('aria-label', 'Go to the podcast page on Apple Podcasts')
-    ap.setAttribute('href', data.links['apple-podcasts']);
+    ap.href = data.links['apple-podcasts'];
+    ap.target = '_blank';
+    ap.setAttribute('aria-label', 'Go to the podcast page on Apple Podcasts');
     ap.appendChild(links);
     ap.innerHTML = '<i class="fa fa-podcast" aria-hidden="true"></i>';
     links.appendChild(ap);
-    // Spotify Icon
+    
+    // Spotify icon
     let sf = document.createElement('a');
     sf.classList.add('link');
     sf.title = 'Spotify';
+    sf.href = data.links['spotify'];
+    sf.target = '_blank';
     sf.setAttribute('aria-label', 'Go to the podcast page on Spotify')
-    sf.setAttribute('href', data.links['spotify']);
     sf.appendChild(links);
     sf.innerHTML = '<i class="fa fa-spotify" aria-hidden="true"></i>';
     links.appendChild(sf);
-    // Google Podcasts Icon
+    
+    // Google Podcasts icon
     let gp = document.createElement('a');
     gp.classList.add('link');
     gp.title = 'Apple Podcasts';
+    gp.href = data.links['google-podcasts'];
+    gp.target = '_blank';
     gp.setAttribute('aria-label', 'Go to the podcast page on Google Podcasts')
-    gp.setAttribute('href', data.links['google-podcasts']);
     gp.appendChild(links);
     gp.innerHTML = '<i class="fa fa-android" aria-hidden="true"></i>';
     links.appendChild(gp);
@@ -104,13 +112,17 @@ function renderHosts(data) {
         if(isAdminLogin == true) {
             let buttons = document.createElement('div');
             buttons.classList.add('edit-buttons');
-            // Edit Host Button
+            
+            // Edit host button
             let editButton = document.createElement('button');
+            editButton.classList.add('inactive');
             editButton.innerHTML = '<img src="img/icons/edit-text.svg" alt="edit profile of the host"/>';
             buttons.appendChild(editButton);
-            // Add Host Button
+
+            // Add host button
             if(hostOrder === data.hosts.length) {
                 let addButton = document.createElement('button');
+                addButton.classList.add('inactive');
                 addButton.innerHTML = '<img src="img/icons/edit-add.svg" alt="add a new host profile"/>';
                 buttons.appendChild(addButton);
             }
@@ -151,7 +163,7 @@ function renderModal(data) {
         let modalWindow = document.createElement('div');
         modalWindow.classList.add('modal-window');
 
-        // Modal Top Bar
+        // modal top bar
         let topBar = document.createElement('div');
         topBar.classList.add('modal-top-bar');
         let closeButton = document.createElement('button');
@@ -176,11 +188,11 @@ function renderModal(data) {
         topBar.appendChild(closeButton);
         topBar.appendChild(saveButton);
 
-        // Modal Content
+        // modal content
         let content = document.createElement('div');
         content.classList.add('modal-content');
 
-        // Primary Description (d1)
+        // primary description (d1)
         let d1 = document.createElement('div');
         d1.innerHTML = '<label for="primary description">Primary Description</label>';
         let d1input = document.createElement('textarea');
@@ -191,7 +203,7 @@ function renderModal(data) {
         d1.appendChild(d1input);
         content.appendChild(d1);
 
-        // Secondary Description (d2)
+        // secondary Description (d2)
         let d2 = document.createElement('div');
         d2.innerHTML = '<label for="secondary description">Secondary Description</label>';
         let d2input = document.createElement('textarea');
@@ -202,7 +214,7 @@ function renderModal(data) {
         d2.appendChild(d2input);
         content.appendChild(d2);
 
-        // Apple Podcasts Link (d3)
+        // Apple Podcasts link (d3)
         let d3 = document.createElement('div');
         d3.innerHTML = '<label for="apple podcasts">Apple Podcasts</label>';
         let d3input = document.createElement('input');
@@ -213,7 +225,7 @@ function renderModal(data) {
         d3.appendChild(d3input);
         content.appendChild(d3);
 
-        // Spotify Link (d4)
+        // Spotify link (d4)
         let d4 = document.createElement('div');
         d4.innerHTML = '<label for="spotify">Spotify</label>';
         let d4input = document.createElement('input');
@@ -224,7 +236,7 @@ function renderModal(data) {
         d4.appendChild(d4input);
         content.appendChild(d4);
 
-        // Google Podcasts Link (d5)
+        // Google Podcasts link (d5)
         let d5 = document.createElement('div');
         d5.innerHTML = '<label for="google podcasts">Google Podcasts</label>';
         let d5input = document.createElement('input');
@@ -248,6 +260,7 @@ function renderEpisodes(data) {
     data.episodes.forEach((episode) => {
         let ep = document.createElement('div');
         ep.classList.add('episode');
+
         // if(isAdminLogin == true) {
         //     let buttons = document.createElement('div');
         //     buttons.classList.add('edit-buttons');
@@ -257,14 +270,18 @@ function renderEpisodes(data) {
         //     buttons.appendChild(editButton);
         //     ep.appendChild(buttons);
         // }
+        
+        // episode cover
         let cover = document.createElement('div');
         cover.setAttribute('style', 'background-image: url(' + episode['cover-photo'] + ');');
         cover.classList.add('episode-cover');
+
+        // episode description
         let description = document.createElement('div');
         description.classList.add('episode-description');
-        let number = document.createElement('h4');
+        let number = document.createElement('h3');
         number.innerText = 'Episode ' + episode.episode;
-        let title = document.createElement('h3');
+        let title = document.createElement('h4');
         title.innerText = episode.title;
         description.appendChild(number);
         description.appendChild(title);
@@ -314,26 +331,44 @@ function renderNowPlayingMobile(data) {
     nowPlayingMobile.appendChild(title);
 }
 
+function togglerSpinner() {
+	document.querySelector('.fa-spinner').classList.toggle('.spinner-inactive');
+}
+
+function renderError(error) {
+    let overview = document.querySelector('.overview-editable');
+    let message = document.createElement('p');
+    message.innerText = error;
+    overview.appendChild(message);
+}
+
 function fetchDatabase(url) {
+    togglerSpinner();
 	let promise = fetch(url)
 		.then((response) => {
 			return response.json();
 		})
 		.then((data) => {
             database = JSON.parse(JSON.stringify(data));
+
             // sort episodes from latest to oldest
             database.episodes.sort((episode1, episode2) => episode2.episode - episode1.episode);
+
+            // render each section
             renderHeader(database);
             renderContent(database);
             renderEpisodes(database);
             renderNowPlaying(database);
+
 		})
-		.catch((err) => {
-			console.log(err);
+		.catch((error) => {
+			renderError(error);
         })
+        .then(togglerSpinner);
     return promise;
 }
 
+// overview indicators
 let overviewIndicator = document.querySelector('#to-overview');
 overviewIndicator.addEventListener('click', () => {
     if(indicatorState != 'overview') {
@@ -354,6 +389,7 @@ hostsIndicator.addEventListener('click', () => {
     }
 });
 
+// player interface
 let backwardButton = document.querySelector('.step-backward-button');
 backwardButton.addEventListener('click', () => {
     nowPlayingEpisode = (nowPlayingEpisode + 1) % database.episodes.length;
@@ -366,4 +402,4 @@ forwardButton.addEventListener('click', () => {
     renderNowPlaying(database);
 });
 
-fetchDatabase(databaseURL);
+fetchDatabase(DATABASEURL);
