@@ -113,7 +113,7 @@ function renderHosts(data) {
                 let addButton = document.createElement('button');
                 addButton.innerHTML = '<img src="img/icons/edit-add.svg" alt="add a new host profile"/>';
                 buttons.appendChild(addButton);
-            };
+            }
             h.appendChild(buttons);
         }
 
@@ -239,7 +239,7 @@ function renderModal(data) {
         modalWindow.appendChild(content);
         modal.appendChild(modalWindow);
         forModal.appendChild(modal);
-    };
+    }
 }
 
 function renderEpisodes(data) {
