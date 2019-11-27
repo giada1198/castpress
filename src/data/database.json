@@ -1,0 +1,56 @@
+{   
+    "name": "99% Invisible",
+    "links": {
+        "apple-podcasts": "https://podcasts.apple.com/us/podcast/99-invisible/id394775318",
+        "spotify": "https://open.spotify.com/show/2VRS1IJCTn2Nlkg33ZVfkM",
+        "google-podcasts": "https://play.google.com/store/apps/details?id=com.google.android.apps.podcasts&hl=en_US"
+    },
+    "overview": {
+        "primary-description": "Ever wonder how inflatable men came to be regular fixtures at used car lots? Curious about the origin of the fortune cookie?",
+        "secondary-description": "99% Invisible is about all the thought that goes into the things we don’t think about — the unnoticed architecture and design that shape our world. With over 250 million downloads."
+    },
+    "hosts": [
+        {
+            "photo": "img/host1.png",
+            "name": "Aarron Walter",
+            "description": "As the VP of Design Education at InVision, Aarron Walter draws upon 15 years of experience running product teams and teaching design to help companies enact design best practices. Aarron founded the UX practice at MailChimp and helped grow the product from a few thousand users to more than 10 million."  
+        },
+        {
+            "photo": "img/host2.png",
+            "name": "Eli Woolery",
+            "description": "Eli is the Director of Design Education at InVision. His design career spans both physical and digital products, and he has worked with companies ranging from startups (his own and others) to Fortune 500 companies."  
+        }
+    ],
+    "episodes": [
+        {
+            "episode": 1,
+            "title": "Dead Cars",
+            "cover-photo": "img/ep1_cover.jpg"
+        },
+        {
+            "episode": 2,
+            "title": "The Help-Yourself City",
+            "cover-photo": "img/ep2_cover.jpg"
+        },
+        {
+            "episode": 3,
+            "title": "The Kirkbride Plan",
+            "cover-photo": "img/ep3_cover.jpg"
+        },
+        {
+            "episode": 4,
+            "title": "Unsure Footing",
+            "cover-photo": "img/ep4_cover.jpg"
+        },
+        {
+            "episode": 5,
+            "title": "Audio Guide to the Imperfections of a Perfect Masterpiece",
+            "cover-photo": "img/ep5_cover.jpg"
+        },
+        {
+            "episode": 6,
+            "title": "Great Bitter Lake Association",
+            "cover-photo": "img/ep6_cover.jpg"
+        }
+    ]
+}
