@@ -72,7 +72,7 @@ export default class App extends Component {
 						episodes: items
 					}
 				});
-				this.fetchFirebaseData('firebase.json');
+				this.fetchFirebaseData('fb.json');
 			});
 		return promise;
 	}
