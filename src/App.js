@@ -1,26 +1,45 @@
 import React, { Component } from 'react';
 import * as rssParser from 'react-native-rss-parser';
+import Modal from './components/modal/Modal';
 import Intro from './components/intro/Intro';
 import Episodes from './components/episodes/Episodes';
 import Player from './components/player/Player';
-// import './App.css';
 
 export default class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			changedBackgroundColor: false,
+			modalStatus: 'none',
 			nowPlaying: 0,
 			autoPlay: false,
-			episodeAmount: 0,
-			changedBackgroundColor: false
+			episodeAmount: 0
 		};
 	}
 
 	changeEpisode = (ep) => {
 		this.setState({ 
 			nowPlaying: ep
-		})
+		});
 	};
+
+	callModalWindow = (status) => {
+		this.setState({ 
+			modalStatus: status
+		});
+	}
+
+	closeModalWindow = () => {
+		this.setState({ 
+			modalStatus: 'none'
+		});
+	}
+
+	updateData = (updatedData) => {
+		this.setState({
+			data: updatedData
+		});
+	}
 
 	fetchRSSFeeds = (url) => {
 		let promise = fetch(url)
@@ -114,7 +133,8 @@ export default class App extends Component {
 			<div id="background" className={cl}>
 				<Header title={title} changedBackgroundColor={this.state.changedBackgroundColor}/>
 				<main>
-					<Intro data={this.state.data} />
+					<Modal data={this.state.data} status={this.state.modalStatus} closeWindow={this.closeModalWindow} updateData={this.updateData} />
+					<Intro data={this.state.data} callWindow={this.callModalWindow} />
 					<SearchBarMiddle />
 					<Episodes episodes={this.state.data.episodes} changeEpisode={this.changeEpisode} />
 				</main>

@@ -32,7 +32,6 @@ body {
 	position: fixed;
 	width: 100%;
 	top: 0;
-	/* padding: 30px; */
 	padding: 30px 30px 5px 30px;
 	margin-right: auto;
 	margin-left: auto;
@@ -88,9 +87,9 @@ body {
 
 .content {
 	/* min-height: calc(100vh - 70px); */
+	/* max-height: 100vh; */
 	padding-top: 111px;
 	padding-bottom: 111px;
-	/* max-height: 100vh; */
 }
 
 .indicator {
@@ -219,96 +218,6 @@ body {
 
 .edit-buttons .inactive {
 	opacity: 25%;
-}
-
-.modal {
-	display: block;
-	position: fixed;
-	z-index: 1;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: auto;
-	background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
-}
-
-.modal-window {
-	width: 100%;
-	height: 100%;
-	background-color: #F2F2F2;
-}
-
-.modal-top-bar {
-	display: flex;
-	justify-content: space-between;
-	padding: 10px 30px;
-	background-color: #333333;
-}
-
-.modal-top-bar .close-button {
-	font-size: 20px;
-	color: #FEFEFE;
-	background-color: Transparent;
-	border: none;
-	cursor: pointer;
-	overflow: hidden;
-	outline: none;
-}
-
-.modal-top-bar .close-button:hover, .modal-top-bar .close-button:focus {
-	opacity: 50%;
-}
-
-.modal-top-bar .save-button {
-	width: 80px;
-	height: 30px;
-	font-size: 14px;
-	color: #FEFEFE;
-	background-color: #4F4F4F;
-	border-radius: 6px;
-	border: none;
-	cursor: pointer;
-	overflow: hidden;
-	outline: none;
-}
-
-.modal-content {
-	padding: 25px 30px 30px 30px;
-	color: #4F4F4F;
-}
-
-.modal-content label {
-	font-size: 14px;
-	font-weight: 700;
-	color: #4F4F4F;
-}
-
-.modal-content textarea {
-	resize: none;
-	width: calc(100% - 32px);
-	font-size: 12px;
-	line-height: 135%;
-	color: #4F4F4F;
-	background-color: #F2F2F2;
-	padding: 8px 16px;
-	margin-top: 8px;
-	margin-bottom: 20px;
-	border: solid 1px #BDBDBD;
-	border-radius: 6px;
-}
-
-.modal-content input {
-	width: calc(100% - 32px);
-	font-size: 12px;
-	line-height: 135%;
-	color: #4F4F4F;
-	background-color: #F2F2F2;
-	padding: 8px 16px;
-	margin-top: 8px;
-	margin-bottom: 20px;
-	border: solid 1px #BDBDBD;
-	border-radius: 6px;
 }
 
 .fa-spinner {
@@ -452,12 +361,6 @@ body {
 	.edit-buttons button {
 		margin-right: 0px;
 		margin-bottom: 10px;
-	}
-
-	.modal-window {
-		margin: 100px auto 0 auto;
-		width: 650px;
-		height: auto;
 	}
 }
   

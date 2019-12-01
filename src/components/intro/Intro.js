@@ -21,7 +21,7 @@ export default class Intro extends Component {
             )
         });
 
-        let content = (this.state.activeItem === 'overview') ? (<Overview overview={this.props.data.overview} links={this.props.data.links} />) : (this.state.activeItem === 'hosts') ? (<Hosts hosts={this.props.data.hosts} />) : null;
+        let content = (this.state.activeItem === 'overview') ? (<Overview overview={this.props.data.overview} links={this.props.data.links} callWindow={this.props.callWindow} />) : (this.state.activeItem === 'hosts') ? (<Hosts hosts={this.props.data.hosts} />) : null;
 
         return (
             <div className="container grid">
@@ -62,6 +62,9 @@ class Indicator extends Component {
 }
 
 class Overview extends Component {
+    callWindow = () => {
+        this.props.callWindow('overview');
+    }
 
     render() {
         let links = ['apple-podcasts', 'spotify', 'google-podcasts'].map((platform) => {
@@ -93,6 +96,11 @@ class Overview extends Component {
 
         return (
             <div className="overview-editable">
+                <div className="edit-buttons">
+                    <button onClick={this.callWindow}>
+                        <img src="img/icons/edit-text.svg" alt="edit the overview section" />
+                    </button>
+                </div>
                 <h2>{this.props.overview.primary}</h2>
                 <p>{this.props.overview.secondary}</p>
                 <div className="links">
@@ -104,7 +112,6 @@ class Overview extends Component {
 }
 
 class Hosts extends Component {
-
     render() {
         let hostKeys = Object.keys(this.props.hosts)
         let hosts = hostKeys.map((key) => {
