@@ -1,18 +1,26 @@
 import React, { Component } from 'react';
 import * as rssParser from 'react-native-rss-parser';
 import Intro from './components/intro/Intro';
+import Episodes from './components/episodes/Episodes';
 import Player from './components/player/Player';
-
 // import './App.css';
 
 export default class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			rss: {},
-			database: {}
+			nowPlaying: 0,
+			autoPlay: false,
+			episodeAmount: 0,
+			changedBackgroundColor: false
 		};
 	}
+
+	changeEpisode = (ep) => {
+		this.setState({ 
+			nowPlaying: ep
+		})
+	};
 
 	fetchRSSFeeds = (url) => {
 		let promise = fetch(url)
@@ -20,33 +28,32 @@ export default class App extends Component {
 			.then((responseData) => rssParser.parse(responseData))
 			.then((rss) => {
 				// map useful data from the feeds
-				let items = rss.items.map((item) => {
-					return {
+				let items = {};
+				rss.items.forEach((item) => {
+					items[item.id] = {
 						id: item.id,
 						title: item.title,
 						description: item.description,
+						cover: rss.image.url,
 						soundURL: item.enclosures[0].url,
 						soundFormat: item.enclosures[0].mimeType,
+						duration: item.itunes.duration,
 						published: new Date(item.published)
 					};
-				})
-				// sort episodes by published date
-				items.sort((a, b) => {
-					if(a.published > b.published) return -1;
-					else if(a.published < b.published) return 1;
-					return 0;
 				});
 				// save to state
 				this.setState({
 					rss: {
 						title: rss.title,
+						cover: rss.image.url,
 						overview: {
-							primary: rss.description
+							primary: rss.description, 
+							secondary: 'none'
 						},
 						episodes: items
 					}
 				});
-				console.log(this.state.rss);
+				this.fetchFirebaseData('firebase.json');
 			});
 		return promise;
 	}
@@ -56,8 +63,27 @@ export default class App extends Component {
 			.then((response) => response.json())
 			.then((data) => {
 				let database = JSON.parse(JSON.stringify(data));
-				this.setState({ database: database });
-				console.log(this.state.database);
+				let sortedData = {};
+				['title', 'cover', 'overview', 'links', 'hosts'].forEach((key) => {
+					if(!database[key]) sortedData[key] = this.state.rss[key];
+					else sortedData[key] = database[key];
+				});
+				let episodeKeys = Object.keys(this.state.rss.episodes);
+				let episodes = episodeKeys.map((key) => {
+					if(!database.episodes[key]) return this.state.rss.episodes[key];
+					else return database.episodes[key];
+				});
+				// sort episodes by published date
+				episodes.sort((a, b) => {
+					if(a.published > b.published) return -1;
+					else if(a.published < b.published) return 1;
+					return 0;
+				});
+				sortedData.episodes = episodes;
+				this.setState({
+					data: sortedData,
+					episodeAmount: sortedData.episodes.length
+				});
 			})
 			.catch((error) => {
 				// renderError(error);
@@ -67,26 +93,37 @@ export default class App extends Component {
 
 	componentDidMount() {
 		this.fetchRSSFeeds('rss.xml');
-		this.fetchFirebaseData('firebase.json');
-		console.log(this.state.rss);
+		window.addEventListener('scroll', (event) => {
+			if (window.scrollY > 500) {
+				this.setState({ changedBackgroundColor: true })
+			  } else {
+				this.setState({ changedBackgroundColor: false })
+			  }
+		});
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('scroll', () => {});
 	}
 
 	render() {
-		if(!this.state.rss.title) return null;
-		let title = !this.state.database.title ? this.state.database.title : this.state.rss.title;
+		if(!this.state.rss || !this.state.data) return null;
+		let cl = this.state.changedBackgroundColor ? 'change' : '';
+		let title = !this.state.data.title ? this.state.rss.title : this.state.data.title;
 		return (
-			<div>
-				<Header title={title} />
+			<div id="background" className={cl}>
+				<Header title={title} changedBackgroundColor={this.state.changedBackgroundColor}/>
 				<main>
-					<Content />
+					<Intro data={this.state.data} />
+					<SearchBarMiddle />
+					<Episodes episodes={this.state.data.episodes} changeEpisode={this.changeEpisode} />
 				</main>
 				<footer>
-					<Player />
+					<Player episodes={this.state.data.episodes} nowPlaying={this.state.nowPlaying} episodeAmount={this.state.episodeAmount} changeEpisode={this.changeEpisode} />
 				</footer>
 			</div>
 		);
 	}
-
 }
 
 class Header extends Component {
@@ -95,15 +132,20 @@ class Header extends Component {
 		this.state = {};
 	}
 
-	handleSignUp = () => {
+	handleSignUp = (event) => {
+		event.preventDefault();
+	}
 
+	handleSearch = (event) => {
+		event.preventDefault();
 	}
 
 	render() {
+		let cl = this.props.changedBackgroundColor ? 'header-container change' : 'header-container';
 		return (
 			<header>
-				<span className="deco-bar"></span>
-				<div className="header-container">
+				{/* <span className="deco-bar"></span> */}
+				<div className={cl}>
 					<section className="name">
 						<span className="dot"></span>
 						<div className="header-texts">
@@ -113,7 +155,7 @@ class Header extends Component {
 					</section>
 					<form className="search-container-top">
 						<input type="text" id="search-bar-desktop" placeholder="Episodes, Contents, Published Dates" />
-						<i className="search-icon-top fa fa-search fa-1point5x" aria-hidden="true"></i>
+						<button onClick={this.handleSearch}><i className="search-icon-top fa fa-search fa-1point5x" aria-hidden="true"></i></button>
 					</form>
 				</div>
 			</header>
@@ -121,18 +163,19 @@ class Header extends Component {
 	}
 }
 
-class Content extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-		};
+class SearchBarMiddle extends Component {
+	handleSearch = (event) => {
+		event.preventDefault();
 	}
 
 	render() {
 		return (
-			<main>
-				<Intro />
-			</main>
-		);
+			<div className="container search-container-middle">
+				<form>
+					<input type="text" id="search-bar-mobile" placeholder="Episodes, Contents, Published Dates" />
+					<button onClick={this.handleSearch}><i className="search-btn-middle fa fa-search" aria-hidden="true"></i></button>
+				</form>
+			</div>
+		)
 	}
 }
