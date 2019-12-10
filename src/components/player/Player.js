@@ -72,16 +72,28 @@ export default class Player extends Component {
     }
 
     render() {
-        if(!this.props.episodes[this.props.nowPlaying]) return null;
+        if(!this.props.episodes) return null;
         
+        let episodeKeys = Object.keys(this.props.episodes);
+        let episodes = episodeKeys.map((key) => {
+            return this.props.episodes[key];
+        });
+        // sort episodes by published date
+        episodes.sort((a, b) => {
+            let da = new Date(a.published);
+            let db = new Date(b.published);
+            if(da > db) return -1;
+            else if(da < db) return 1;
+            return 0;
+        });
         let playIcon = (this.state.playStatus === 'play') ? (<i className="fa fa-play"></i>) : (<i className="fa fa-pause"></i>)
         return (
             <section className="player">
-                <audio src={this.props.episodes[this.props.nowPlaying].soundURL} ref={(audio) => { 
+                <audio src={episodes[this.props.nowPlaying].soundURL} ref={(audio) => { 
                     this.audio = audio;
                     }} />
                 <div className="container grid">
-                    <TrackInfoDesktop track={this.props.episodes[this.props.nowPlaying]} />
+                    <TrackInfoDesktop track={episodes[this.props.nowPlaying]} />
                     <div className="player-interface">
                         <button className="step-backward-bt" onClick={this.stepBackward}>
                             <i className="fa fa-step-backward"></i>
@@ -99,8 +111,8 @@ export default class Player extends Component {
                             <i className="fa fa-step-forward"></i>
                         </button>
                         <div className="now-playing">
-                            <TrackInfoMobile track={this.props.episodes[this.props.nowPlaying]} />
-                            <ProgressBar duration={this.props.episodes[this.props.nowPlaying].duration} currentTime={this.state.currentTime} currentPercent={this.state.currentPercent} />
+                            <TrackInfoMobile track={episodes[this.props.nowPlaying]} />
+                            <ProgressBar duration={episodes[this.props.nowPlaying].duration} currentTime={this.state.currentTime} currentPercent={this.state.currentPercent} />
                         </div>
                     </div>
                 </div>

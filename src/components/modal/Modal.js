@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import TextEditor from './TextEditor';
+import firebase from 'firebase/app';
 import './Modal.css';
 
 export default class Modal extends Component {
@@ -9,8 +11,20 @@ export default class Modal extends Component {
                 data={this.props.data} 
                 status={this.props.status} 
                 closeWindow={this.props.closeWindow} 
-                save={this.props.save}
-                updateData={this.props.updateData} /> : null;
+                save={this.props.save} /> :
+            (this.props.status === 'signup') ?
+            <SignUpWindow
+                status={this.props.status}
+                closeWindow={this.props.closeWindow}
+                signUpCallback={this.props.signUpCallback} 
+                signInCallback={this.props.signInCallback} /> :
+            (this.props.status === 'episode') ?
+            <EditEpisodeWindow
+                key={this.props.episodeId}
+                episode={this.props.data.episodes[this.props.episodeId]} 
+                episodeId={this.props.episodeId}
+                closeWindow={this.props.closeWindow} /> : 
+                null;
         return (
             <div id="forModal">
                 <div className="modal">
@@ -18,6 +32,79 @@ export default class Modal extends Component {
                 </div>
             </div>
         );
+    }
+}
+
+class SignUpWindow extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            'email': undefined,
+            'password': undefined,
+            'handle': undefined,
+            'avatar': '' //default to blank value
+        };
+    }
+
+    handleChange = (event) => {
+        let field = event.target.name; //which input
+        let value = event.target.value; //what value
+    
+        let changes = {}; //object to hold changes
+        changes[field] = value; //change this field
+        this.setState(changes); //update state
+    }
+    
+    //handle signUp button
+    handleSignUp = (event) => {
+        event.preventDefault();
+        this.props.signUpCallback(this.state.email, this.state.password);
+        this.props.closeWindow();
+    }
+    
+    //handle signIn button
+    handleSignIn = (event) => {
+        event.preventDefault();
+        this.props.signInCallback(this.state.email, this.state.password);
+        this.props.closeWindow();
+    }
+
+    closeWindow = () => {
+        this.props.closeWindow();
+    }
+
+    render() {
+        return (
+            <div className="modal-window">
+                <div className="modal-top-bar">
+                    <button className="close-button" onClick={this.closeWindow}>
+                        <i className="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                    <div>
+                        <button className="button" onClick={this.handleSignUp}>Sign-up</button>
+                        <button className="button" onClick={this.handleSignIn}>Sign-in</button>
+                    </div>
+                </div>
+                <div className="modal-content">
+                    <div>
+                        <label htmlFor="email">Email</label>
+                        <input className="form-control"
+                            onChange={this.handleChange}
+                            id="email"
+                            type="email"
+                            name="email" />
+                    </div>
+                    <div>
+                        <label htmlFor="password">Password</label>
+                        <input className="form-control"
+                            onChange={this.handleChange}
+                            id="password"
+                            type="password"
+                            name="password" />
+                    </div>
+                </div>
+            </div>
+        )
     }
 }
 
@@ -60,7 +147,8 @@ class EditOverviewWindow extends Component {
         Object.keys(this.state).forEach((key) => {
             data[key] = this.state[key];
         });
-        this.props.updateData(data);
+        let dataRef = firebase.database().ref('data');
+        dataRef.set({ data: data })
         this.props.closeWindow();
     }
 
@@ -71,7 +159,7 @@ class EditOverviewWindow extends Component {
                     <button className="close-button" onClick={this.closeWindow}>
                         <i className="fa fa-times" aria-hidden="true"></i>
                     </button>
-                    <button className="save-button" onClick={this.save}>Save</button>
+                    <button className="button" onClick={this.save}>Save</button>
                 </div>
                 <div className="modal-content">
                     <div>
@@ -94,6 +182,67 @@ class EditOverviewWindow extends Component {
                         <label htmlFor="google podcasts">Google Podcasts</label>
                         <input value={this.state.links['google-podcasts']} onChange={this.handleChange} id="google podcasts" type="url" name="google-podcasts" />
                     </div>
+                </div>
+            </div>
+        );
+    }
+}
+
+class EditEpisodeWindow extends Component {
+	constructor(props) {
+        super(props);
+        this.state = {
+            title: this.props.episode.title,
+            description: this.props.episode.description
+        };
+    }
+
+    handleChange = (event) => {
+        let name = event.target.name;
+        let value = event.target.value;
+        if(name === 'title') this.setState({ title: value });
+    }
+
+    handleDescriptionChange = (input) => {
+        this.setState({ description: input });
+    }
+
+    closeWindow = () => {
+        this.props.closeWindow();
+    }
+
+    save = () => {
+        let path = 'data/data/episodes/' + this.props.episodeId
+        console.log(path);
+        let dataRef = firebase.database().ref(path);
+        // dataRef.once('value').then((snapshot) => {
+        //     console.log(snapshot.val());
+        // });
+        dataRef.child('title').set(this.state.title);
+        dataRef.child('description').set(this.state.description);
+        this.props.closeWindow();
+    }
+
+    render() {
+        return (
+            <div className="modal-window">
+                <div className="modal-top-bar">
+                    <button className="close-button" onClick={this.closeWindow}>
+                        <i className="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                    <button className="button" onClick={this.save}>Save</button>
+                </div>
+                <div className="modal-content">
+                    <div>
+                        <label htmlFor="title">Title</label>
+                        <input value={this.state.title}
+                            onChange={this.handleChange}
+                            id="title"
+                            name="title" />
+                    </div>
+                    <label htmlFor="apple podcasts">Description</label>
+                    <TextEditor description={this.state.description}
+                        handleChange={this.handleDescriptionChange} />
                 </div>
             </div>
         );

@@ -14,21 +14,28 @@ export default class Intro extends Component {
     }
 
     render() {
-        let indicators = this.state.items.map((item) => {
-            let isActive = (item === this.state.activeItem);
-            return (
-                <Indicator key={item} to={item} isActive={isActive} handleChange={this.handleChange} />
-            )
-        });
+        // let indicators = this.state.items.map((item) => {
+        //     let isActive = (item === this.state.activeItem);
+        //     return (
+        //         <Indicator key={item} to={item} isActive={isActive} handleChange={this.handleChange} />
+        //     )
+        // });
 
-        let content = (this.state.activeItem === 'overview') ? (<Overview overview={this.props.data.overview} links={this.props.data.links} callWindow={this.props.callWindow} />) : (this.state.activeItem === 'hosts') ? (<Hosts hosts={this.props.data.hosts} />) : null;
+        let content = (this.state.activeItem === 'overview') ?
+            (<Overview overview={this.props.data.overview} 
+                user={this.props.user}
+                links={this.props.data.links}
+                callWindow={this.props.callWindow} 
+                />)
+            : (this.state.activeItem === 'hosts') ?
+                (<Hosts hosts={this.props.data.hosts} />) : null;
 
         return (
             <div className="container grid">
                 <section className="content">
-                    <div className="indicators">
+                    {/* <div className="indicators">
                         {indicators}
-                    </div>
+                    </div> */}
                     <i className="spinner-inactive fa fa-spinner fa-spin" aria-hidden="true"></i>
                     {content}
                 </section>
@@ -37,29 +44,29 @@ export default class Intro extends Component {
     }
 }
 
-class Indicator extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
+// class Indicator extends Component {
+//     constructor(props) {
+//         super(props);
+//         this.state = {};
+//     }
 
-    clickIndicator = () => {
-        this.props.handleChange(this.props.to);
-    }
+//     clickIndicator = () => {
+//         this.props.handleChange(this.props.to);
+//     }
 
-    render() {
-        if (this.props.isActive) {
-            return (
-                <span className="indicator active" onClick={this.clickIndicator} />
-            )
-        }
-        else {
-            return (
-                <span className="indicator" onClick={this.clickIndicator} />
-            )
-        }
-    }
-}
+//     render() {
+//         if (this.props.isActive) {
+//             return (
+//                 <span className="indicator active" onClick={this.clickIndicator} />
+//             )
+//         }
+//         else {
+//             return (
+//                 <span className="indicator" onClick={this.clickIndicator} />
+//             )
+//         }
+//     }
+// }
 
 class Overview extends Component {
     callWindow = () => {
@@ -94,13 +101,17 @@ class Overview extends Component {
             return null;
         });
 
+        let editButtons = this.props.user ? (
+            <div className="edit-buttons">
+                <button onClick={this.callWindow}>
+                    <img src="img/icons/edit-text.svg" alt="edit the overview section" />
+                </button>
+            </div>
+            ) : null;
+
         return (
             <div className="overview-editable">
-                <div className="edit-buttons">
-                    <button onClick={this.callWindow}>
-                        <img src="img/icons/edit-text.svg" alt="edit the overview section" />
-                    </button>
-                </div>
+                {editButtons}
                 <h2>{this.props.overview.primary}</h2>
                 <p>{this.props.overview.secondary}</p>
                 <div className="links">

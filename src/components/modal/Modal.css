@@ -37,9 +37,10 @@
 	opacity: 50%;
 }
 
-.modal-top-bar .save-button {
+.modal-top-bar .button {
 	width: 80px;
 	height: 30px;
+	margin-left: 15px;
 	font-size: 14px;
 	color: #FEFEFE;
 	background-color: #4F4F4F;
@@ -86,6 +87,31 @@
 	margin-bottom: 20px;
 	border: solid 1px #BDBDBD;
 	border-radius: 6px;
+}
+
+.rdw-editor-toolbar {
+	margin-top: 10px;
+	/* border: solid 1px #BDBDBD; */
+	border-radius: 6px;
+	font-size: 12px;
+}
+
+.rdw-editor-toolbar label {
+	font-size: 12px;
+	margin: 5px;
+}
+
+.rdw-editor-toolbar input {
+	font-size: 12px;
+	margin: 5px;
+}
+
+.rdw-editor-main {
+	padding: 0 16px;
+	margin: 16px 0;
+	border: solid 1px #BDBDBD;
+	border-radius: 6px;
+	font-size: 12px;
 }
 
 @media (min-width: 768px) {

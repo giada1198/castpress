@@ -7,6 +7,7 @@
 	display: inline-flex;
 	align-items: center;
 	width: 100%;
+	padding: 0;
 	margin-bottom: 30px;
 	transition-duration: 0.5s;
 	transition-property: background-color;
@@ -17,12 +18,31 @@
 }
 
 .episode-cover {
-	display: inline-block;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	min-width: 75px;
-	min-height: 75px;
+	height: 75px;
 	margin-right: 15px;
 	background-size: cover;
 	background-repeat: no-repeat;
+}
+
+.episode-cover .play-icon {
+	font-size: 30px;
+	color: black;
+	display: none;
+}
+
+.episode-cover:hover {
+	cursor: pointer;
+	/* opacity: 50%; */
+}
+
+.episode-cover:hover .play-icon {
+	cursor: pointer;
+	display: block;
+	/* opacity: 100%; */
 }
 
 .episode-description h3 {
@@ -37,12 +57,19 @@
 	font-weight: 400;
 }
 
+.episode-description p {
+	width: 100%;
+	margin-top: 10px;
+	line-height: 140%;
+}
+
 @media (min-width: 768px) {
 	.episodes {
 		padding-bottom: 100px;
 	}
 
 	.episode {
+		padding: 25px 25px 25px 0;
 		margin-bottom: 40px;
 	}
 
@@ -51,6 +78,7 @@
 		min-height: 120px;
 		margin-right: 20px;
 	}
+
 
 	.episode-description h3 {
 		font-size: 14px;
